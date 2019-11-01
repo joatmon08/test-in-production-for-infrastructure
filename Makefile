@@ -13,5 +13,8 @@ plan:
 apply:
 	$(SETUP) terraform apply
 
+integration: apply
+	$(SETUP) kitchen test
+
 clean:
 	$(SETUP) terraform destroy --force  || true
