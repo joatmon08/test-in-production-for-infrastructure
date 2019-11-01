@@ -1,0 +1,27 @@
+version: "3.3"
+services:
+
+  expense-v2:
+    image: joatmon08/expense:dotnet
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+    networks:
+      vpcbr:
+        ipv4_address: 10.5.0.6
+  expense_proxy_v2:
+    image: nicholasjackson/consul-envoy:v1.6.1-v0.10.0
+    environment:
+      CONSUL_HTTP_ADDR: 10.5.0.2:8500
+      CONSUL_GRPC_ADDR: 10.5.0.2:8502
+      SERVICE_CONFIG: /config/expense_v2.hcl
+      CENTRAL_CONFIG_DIR: /central_config
+    volumes:
+      - "./service_config:/config"
+      - "./traffic_config:/central_config"
+    command: ["consul", "connect", "envoy","-sidecar-for", "expense-v2"]
+    network_mode: "service:expense-v2"
+  
+networks:
+  vpcbr:
+    external:
+      name: dotnet-service-mesh-example_vpcbr
