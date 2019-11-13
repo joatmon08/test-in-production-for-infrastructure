@@ -1,4 +1,4 @@
-describe host('10.128.0.4', port: 22, protocol: 'tcp') do
+describe host('10.128.0.11', port: 22, protocol: 'tcp') do
   it { should be_reachable }
   it { should be_resolvable }
 end

@@ -12,8 +12,8 @@ data "aws_ami" "nginx" {
 resource "aws_instance" "application" {
   instance_type          = "t2.micro"
   ami                    = data.aws_ami.nginx.id
-  vpc_security_group_ids = aws_security_group.instances.*.id
-  subnet_id              = aws_subnet.public[0].id
+  vpc_security_group_ids = [aws_security_group.instances.0.id]
+  subnet_id              = aws_subnet.public.0.id
   tags = {
     Name  = "${var.prefix}-application"
     Owner = var.owner
@@ -22,7 +22,7 @@ resource "aws_instance" "application" {
 
 resource "aws_elb" "application" {
   name    = "${var.prefix}-elb"
-  subnets = aws_subnet.public.*.id
+  subnets = [aws_subnet.public.0.id]
 
   listener {
     instance_port     = 80

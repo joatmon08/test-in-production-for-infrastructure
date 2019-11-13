@@ -5,7 +5,7 @@ resource "aws_instance" "canary" {
   vpc_security_group_ids = [aws_security_group.instances[1].id]
   subnet_id              = aws_subnet.public[1].id
   tags = {
-    Name  = "${var.prefix}-canary-${count.index}"
+    Name  = "${var.prefix}-canary"
     Owner = var.owner
   }
 }
