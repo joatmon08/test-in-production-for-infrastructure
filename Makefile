@@ -1,4 +1,8 @@
-SETUP := aws-vault exec rosemary.training --
+SETUP := aws-vault exec rosemary.demos --
+
+fmt:
+	terraform fmt
+	terraform validate
 
 install:
 	terraform init
