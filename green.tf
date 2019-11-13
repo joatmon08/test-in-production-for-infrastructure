@@ -14,7 +14,7 @@ resource "aws_instance" "application_green" {
   instance_type          = "t2.micro"
   ami                    = data.aws_ami.nginx_green.id
   vpc_security_group_ids = aws_security_group.instances.*.id
-  subnet_id              = aws_subnet.public[0].id
+  subnet_id              = aws_subnet.public.0.id
   tags = {
     Name       = "${var.prefix}-application"
     Has_Toggle = var.enable_green_application
