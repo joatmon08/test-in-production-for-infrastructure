@@ -1,5 +1,3 @@
-SETUP := aws-vault exec rosemary.demos --
-
 fmt:
 	terraform fmt
 	terraform validate
@@ -12,13 +10,13 @@ unit:
 	terraform fmt
 
 plan:
-	$(SETUP) terraform plan
+	terraform plan
 
 apply:
-	$(SETUP) terraform apply
+	terraform apply
 
 integration: apply
-	$(SETUP) kitchen test
+	kitchen test
 
 clean:
-	$(SETUP) terraform destroy --force  || true
+	terraform destroy --force  || true
